@@ -1,19 +1,44 @@
+using System.ComponentModel.DataAnnotations;
 using DataAccess;
 using Microsoft.EntityFrameworkCore;
 
-var builder = WebApplication.CreateBuilder(args);
+namespace Api;
 
-builder.Services.AddDbContext<LibraryDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetValue<string>("Db"))
-);
+public class Program
+{
+    public static void ConfigureServices(IServiceCollection services)
+    {
+        services.AddSingleton<AppOptions>(provider =>
+        {
+            var configuration = provider.GetRequiredService<IConfiguration>();
+            var appOptions = new AppOptions();
+            configuration.GetSection(nameof(AppOptions)).Bind(appOptions);
+            return appOptions;
+        });
+        services.AddDbContext<LibraryDbContext>((services, options) =>
+        {
+            options.UseNpgsql(services.GetRequiredService<AppOptions>().DbConnectionString);
+        });
+        services.AddControllers();
+        services.AddOpenApiDocument();
+        services.AddCors();
+    }
 
-builder.Services.AddControllers();
-builder.Services.AddOpenApiDocument();
+    public static void Main()
+    {
+        var builder = WebApplication.CreateBuilder();
+        ConfigureServices(builder.Services);
+        var app = builder.Build();
 
-var app = builder.Build();
 
-app.UseOpenApi();
-app.UseSwaggerUi();
-app.MapControllers();
+        var appOptions = app.Services.GetRequiredService<AppOptions>();
+        Validator.ValidateObject(appOptions, new ValidationContext(appOptions), true);
+        app.UseExceptionHandler(config => { });
+        app.UseOpenApi();
+        app.UseSwaggerUi();
+        app.UseCors(config => config.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().SetIsOriginAllowed(x => true));
+        app.MapControllers();
 
-app.Run();
+        app.Run();
+    }
+}
