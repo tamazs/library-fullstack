@@ -1,6 +1,72 @@
-﻿namespace Api.Controllers;
+﻿using Api.DTOs;
+using Api.DTOs.Request;
+using Api.Services;
+using Microsoft.AspNetCore.Mvc;
 
-public class GenreController
+namespace Api.Controllers;
+
+[ApiController]
+public class GenreController  : ControllerBase
 {
-    
+    private readonly GenreService _genreService;
+
+    public GenreController(GenreService genreService)
+    {
+        _genreService = genreService;
+    }
+
+    [HttpGet(nameof(GetAllGenres))]
+    public async Task<ActionResult<List<GenreDto>>> GetAllGenres()
+    {
+        try
+        {
+            var genres = await _genreService.GetAllGenres();
+            return Ok(genres);
+        }
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
+
+    [HttpPost(nameof(CreateGenre))]
+    public async Task<ActionResult<GenreDto>> CreateGenre([FromBody] CreateGenreRequestDto dto)
+    {
+        try
+        {
+            var genre = await _genreService.CreateGenre(dto);
+            return Ok(genre);
+        } catch (Exception ex) 
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPut(nameof(UpdateGenre))]
+    public async Task<ActionResult<GenreDto>> UpdateGenre([FromBody] UpdateGenreRequestDto dto)
+    {
+        try
+        {
+            var genre = await _genreService.UpdateGenre(dto);
+            return Ok(genre);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpDelete(nameof(DeleteGenre))]
+    public async Task<ActionResult<GenreDto>> DeleteGenre([FromQuery] string id)
+    {
+        try
+        {
+            var genre = await _genreService.DeleteGenre(id);
+            return Ok(genre);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }

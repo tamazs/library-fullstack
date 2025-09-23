@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Api.Services;
 using DataAccess;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,6 +23,9 @@ public class Program
         services.AddControllers();
         services.AddOpenApiDocument();
         services.AddCors();
+        services.AddScoped<GenreService>();
+        services.AddScoped<BookService>();
+        services.AddScoped<AuthorService>();
     }
 
     public static void Main()
