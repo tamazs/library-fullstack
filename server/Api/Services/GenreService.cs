@@ -10,9 +10,9 @@ public class GenreService (LibraryDbContext  dbContext)
 {
     public async Task<List<GenreDto>> GetAllGenres()
     {
-        return dbContext.Genres
+        return await dbContext.Genres
             .Include(g => g.Books)
-            .Select(g => new GenreDto(g)).ToList();
+            .Select(g => new GenreDto(g)).ToListAsync();
     }
 
     public async Task<GenreDto> CreateGenre(CreateGenreRequestDto dto)

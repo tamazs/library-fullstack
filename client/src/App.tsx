@@ -10,7 +10,7 @@ function App() {
   return (
     <>
         <button onClick={() => {
-            fetch(finalUrl + "/swagger/index.html")
+            fetch(finalUrl + "GetAllGenres")
                 .then(res => {
                     console.log(res)
                 }).catch(err => console.log(err))

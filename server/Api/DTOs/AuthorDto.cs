@@ -9,7 +9,7 @@ public class AuthorDto
         Id = author.Id;
         Name = author.Name;
         Createdat = author.Createdat;
-        Books = author.Books?.Select(b => new BookDto(b)).ToList();
+        BookIds = author.Books?.Select(b => b.Id).ToList() ?? new List<string>();
     }
     
     public string Id { get; set; } = null!;
@@ -18,5 +18,5 @@ public class AuthorDto
 
     public DateTime? Createdat { get; set; }
 
-    public virtual ICollection<BookDto> Books { get; set; } = new List<BookDto>();
+    public List<string> BookIds { get; set; } = new List<string>();
 }
