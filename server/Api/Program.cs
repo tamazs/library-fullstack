@@ -26,6 +26,8 @@ public class Program
         services.AddScoped<GenreService>();
         services.AddScoped<BookService>();
         services.AddScoped<AuthorService>();
+        services.AddProblemDetails();
+        services.AddExceptionHandler<GlobalExceptionHandler>();
     }
 
     public static void Main()
@@ -42,7 +44,7 @@ public class Program
         app.UseSwaggerUi();
         app.UseCors(config => config.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().SetIsOriginAllowed(x => true));
         app.MapControllers();
-
+        app.GenerateApiClientsFromOpenApi("/../../client/src/generated-ts-client.ts");
         app.Run();
     }
 }
