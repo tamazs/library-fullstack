@@ -440,38 +440,11 @@
             "format": "date-time",
             "nullable": true
           },
-          "genre": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/GenreDto"
-              }
-            ]
-          },
-          "authorIds": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "GenreDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "createdat": {
+          "genreId": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
-          "bookIds": {
+          "authorIds": {
             "type": "array",
             "items": {
               "type": "string"
@@ -533,6 +506,29 @@
           "genreId": {
             "type": "string",
             "minLength": 1
+          }
+        }
+      },
+      "GenreDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "createdat": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "bookIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },

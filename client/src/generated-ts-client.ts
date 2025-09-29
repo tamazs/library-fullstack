@@ -494,15 +494,8 @@ export interface BookDto {
     title: string;
     pages: number;
     createdat: string | undefined;
-    genre: GenreDto | undefined;
+    genreId: string | undefined;
     authorIds: string[];
-}
-
-export interface GenreDto {
-    id: string;
-    name: string;
-    createdat: string | undefined;
-    bookIds: string[];
 }
 
 export interface CreateBookRequestDto {
@@ -516,6 +509,13 @@ export interface UpdateBookRequestDto {
     pages: number;
     authorIds: string[];
     genreId: string;
+}
+
+export interface GenreDto {
+    id: string;
+    name: string;
+    createdat: string | undefined;
+    bookIds: string[];
 }
 
 export interface CreateGenreRequestDto {
