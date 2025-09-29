@@ -1,19 +1,9 @@
-import { useState } from 'react'
-import {finalUrl} from "./baseUrl.ts";
+import {RouterProvider} from "react-router";
+import {router} from "./routes/router.tsx";
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-        <button className="btn btn-primary" onClick={() => {
-            fetch(finalUrl + "GetAllGenres")
-                .then(res => {
-                    console.log(res)
-                }).catch(err => console.log(err))
-        }}>Click</button>
-    </>
-  )
+  return <RouterProvider router={router} />
 }
 
 export default App
