@@ -48,7 +48,7 @@ export default function BookDetails () {
         }}>
             <div className="card bg-base-100 w-96 shadow-sm">
                 <div className="card-body">
-                    <h2 className="card-title">Add a book</h2>
+                    <h2 className="card-title">Edit book</h2>
                     <input value={editBookForm.title} onChange={e => setEditBookForm({...editBookForm, title: e.target.value})} type="text" required placeholder="Title" className="input" />
                     <input value={editBookForm.pages} onChange={e => setEditBookForm({...editBookForm, pages: Number.parseInt(e.target.value)})} type="number" required placeholder="Pages" className="input" />
                     <div>
