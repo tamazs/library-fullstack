@@ -8,9 +8,9 @@ namespace Api.Controllers;
 [ApiController]
 public class AuthorController : ControllerBase
 {
-    private readonly AuthorService _authorService;
+    private readonly IAuthorService _authorService;
 
-    public AuthorController(AuthorService authorService)
+    public AuthorController(IAuthorService authorService)
     {
         _authorService = authorService;
     }

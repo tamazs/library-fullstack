@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Services;
 
-public class AuthorService (LibraryDbContext dbContext)
+public class AuthorService(LibraryDbContext dbContext) : IAuthorService
 {
     public async Task<List<AuthorDto>> GetAllAuthors()
     {

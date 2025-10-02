@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Services;
 
-public class BookService (LibraryDbContext  dbContext)
+public class BookService (LibraryDbContext  dbContext) : IBookService
 {
     public async Task<List<BookDto>> GetAllBooks()
     {
