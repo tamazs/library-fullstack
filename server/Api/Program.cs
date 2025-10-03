@@ -23,9 +23,9 @@ public class Program
         services.AddControllers();
         services.AddOpenApiDocument();
         services.AddCors();
-        services.AddScoped<GenreService>();
-        services.AddScoped<BookService>();
-        services.AddScoped<AuthorService>();
+        services.AddScoped<IGenreService, GenreService>();
+        services.AddScoped<IBookService, BookService>();
+        services.AddScoped<IAuthorService, AuthorService>();
         services.AddProblemDetails();
         services.AddExceptionHandler<GlobalExceptionHandler>();
     }

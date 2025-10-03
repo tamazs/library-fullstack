@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Services;
 
-public class GenreService (LibraryDbContext  dbContext)
+public class GenreService (LibraryDbContext  dbContext) : IGenreService
 {
     public async Task<List<GenreDto>> GetAllGenres()
     {

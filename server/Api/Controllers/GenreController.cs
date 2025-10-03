@@ -8,9 +8,9 @@ namespace Api.Controllers;
 [ApiController]
 public class GenreController  : ControllerBase
 {
-    private readonly GenreService _genreService;
+    private readonly IGenreService _genreService;
 
-    public GenreController(GenreService genreService)
+    public GenreController(IGenreService genreService)
     {
         _genreService = genreService;
     }
