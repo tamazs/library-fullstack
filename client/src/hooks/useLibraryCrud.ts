@@ -8,7 +8,8 @@ import {
     type UpdateAuthorRequestDto, type UpdateBookRequestDto, type UpdateGenreRequestDto
 } from "../generated-ts-client.ts";
 import toast from "react-hot-toast";
-import {AllAuthorsAtom, AllBooksAtom, AllGenresAtom} from "../atoms/libraryAtoms.ts";
+import {resolveRefs} from "dotnet-json-refs";
+import {AllAuthorsAtom, AllBooksAtom, AllGenresAtom, BooksAtom} from "../atoms/libraryAtoms.ts";
 import customcatch from "../errors/customcatch.ts";
 
 const authorApi = new AuthorClient(finalUrl);
@@ -19,6 +20,7 @@ export default function useLibraryCrud() {
     const [authors, setAuthors] = useAtom(AllAuthorsAtom);
     const [books, setBooks] = useAtom(AllBooksAtom);
     const [genres, setGenres] = useAtom(AllGenresAtom);
+    const [pagBooks, setPagBooks] = useAtom(BooksAtom);
 
     async function getAuthors() {
         try {
@@ -84,6 +86,15 @@ export default function useLibraryCrud() {
         try {
             const result = await bookApi.getAllBooks();
             setBooks(result);
+        } catch (e : any) {
+            customcatch(e);
+        }
+    }
+
+    async function getBooksPag (skip: number, take: number) {
+        try {
+            const result = await bookApi.getBooksPag(skip, take)
+            setPagBooks(resolveRefs(result))
         } catch (e : any) {
             customcatch(e);
         }
@@ -210,6 +221,7 @@ export default function useLibraryCrud() {
         getGenres,
         createGenre,
         updateGenre,
-        deleteGenre
+        deleteGenre,
+        getBooksPag
     }
 }

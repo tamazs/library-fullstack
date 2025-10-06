@@ -1,6 +1,7 @@
 ﻿using Api.DTOs;
 using Api.DTOs.Request;
 using Api.Services;
+using DataAccess;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -21,6 +22,20 @@ public class BookController  : ControllerBase
         try
         {
             var books = await _bookService.GetAllBooks();
+            return Ok(books);
+        }
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
+
+    [HttpGet(nameof(GetBooksPag))]
+    public async Task<ActionResult<List<Book>>> GetBooksPag(int skip, int take)
+    {
+        try
+        {
+            var books = await _bookService.GetBooksPag(skip, take);
             return Ok(books);
         }
         catch (Exception ex)

@@ -9,7 +9,7 @@ function App() {
 
     useEffect(() => {
         libraryCrud.getAuthors();
-            libraryCrud.getBooks();
+            //libraryCrud.getBooks();
             libraryCrud.getGenres();
     }, [])
 

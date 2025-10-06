@@ -17,6 +17,16 @@ public class BookService (LibraryDbContext  dbContext) : IBookService
             .ToListAsync();
     }
 
+    public async Task<List<Book>> GetBooksPag(int skip, int take)
+    {
+        return await dbContext.Books
+            .Include(b => b.Genre)
+            .Include(b => b.Authors)
+            .Skip(skip)
+            .Take(take)
+            .ToListAsync();
+    }
+
     public async Task<BookDto> CreateBook(CreateBookRequestDto dto)
     {
         Validator.ValidateObject(dto, new ValidationContext(dto), true);

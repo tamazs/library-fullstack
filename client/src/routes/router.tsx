@@ -9,13 +9,14 @@ import AuthorCreate from "../pages/AuthorCreate.tsx";
 import Genres from "../pages/Genres.tsx";
 import GenreDetails from "../pages/GenreDetails.tsx";
 import GenreCreate from "../pages/GenreCreate.tsx";
+import BooksPag from "../pages/BooksPag.tsx";
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <Layout />,
         children: [
-            {index: true, element: <Books />},
+            {index: true, element: <BooksPag />},
             {path: "/book/:bookId", element: <BookDetails />},
             {path: "/book/create", element: <BookCreate />},
             {path: "/authors", element: <Authors />},

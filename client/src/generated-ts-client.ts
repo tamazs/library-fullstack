@@ -205,6 +205,47 @@ export class BookClient {
         return Promise.resolve<BookDto[]>(null as any);
     }
 
+    getBooksPag(skip: number | undefined, take: number | undefined): Promise<Book[]> {
+        let url_ = this.baseUrl + "/GetBooksPag?";
+        if (skip === null)
+            throw new globalThis.Error("The parameter 'skip' cannot be null.");
+        else if (skip !== undefined)
+            url_ += "skip=" + encodeURIComponent("" + skip) + "&";
+        if (take === null)
+            throw new globalThis.Error("The parameter 'take' cannot be null.");
+        else if (take !== undefined)
+            url_ += "take=" + encodeURIComponent("" + take) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetBooksPag(_response);
+        });
+    }
+
+    protected processGetBooksPag(response: Response): Promise<Book[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as Book[];
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<Book[]>(null as any);
+    }
+
     createBook(dto: CreateBookRequestDto): Promise<BookDto> {
         let url_ = this.baseUrl + "/CreateBook";
         url_ = url_.replace(/[?&]$/, "");
@@ -496,6 +537,30 @@ export interface BookDto {
     createdat: string | undefined;
     genreId: string | undefined;
     authorIds: string[];
+}
+
+export interface Book {
+    id: string;
+    title: string;
+    pages: number;
+    createdat: string | undefined;
+    genreid: string | undefined;
+    genre: Genre | undefined;
+    authors: Author[];
+}
+
+export interface Genre {
+    id: string;
+    name: string;
+    createdat: string | undefined;
+    books: Book[];
+}
+
+export interface Author {
+    id: string;
+    name: string;
+    createdat: string | undefined;
+    books: Book[];
 }
 
 export interface CreateBookRequestDto {
